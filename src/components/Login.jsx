@@ -4,7 +4,7 @@ import { AuthContext } from "../providers/AuthProviders";
 import { useContext } from "react";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -18,6 +18,17 @@ const Login = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
         form.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
       })
       .catch((error) => {
         console.log(error);
@@ -68,6 +79,11 @@ const Login = () => {
           <Link className="text-center" to="/register">
             <button className="btn btn-link">New to authHola?</button>
           </Link>
+          <div>
+            <button onClick={handleGoogleSignIn} className="btn btn-primary">
+              Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
